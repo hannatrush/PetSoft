@@ -2,7 +2,6 @@
 
 import { signIn, signOut } from '@/lib/auth';
 import prisma from '@/lib/db';
-import { sleep } from '@/lib/utils';
 import { authSchema, petFormSchema, petIdSchema } from '@/lib/validations';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
@@ -16,8 +15,6 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 // ----- user actions -----
 
 export async function logIn(prevState: unknown, formData: unknown) {
-  await sleep(1000);
-
   if (!(formData instanceof FormData)) {
     return {
       message: 'Invalid form data',
@@ -46,13 +43,10 @@ export async function logIn(prevState: unknown, formData: unknown) {
 }
 
 export async function logOut() {
-  await sleep(1000);
   await signOut({ redirectTo: '/' });
 }
 
 export async function signUp(prevState: unknown, formData: unknown) {
-  await sleep(1000);
-
   // check if formDate is a FormData type
   if (!(formData instanceof FormData)) {
     return {
@@ -98,8 +92,6 @@ export async function signUp(prevState: unknown, formData: unknown) {
 // ----- pet actions -----
 
 export const addPet = async (pet: unknown) => {
-  await sleep(1000);
-
   const session = await checkAuth();
 
   const validatedPet = petFormSchema.safeParse(pet);
@@ -129,8 +121,6 @@ export const addPet = async (pet: unknown) => {
 };
 
 export const editPet = async (petId: unknown, newPetData: unknown) => {
-  await sleep(1000);
-
   // authentication check
   const session = await checkAuth();
 
@@ -175,8 +165,6 @@ export const editPet = async (petId: unknown, newPetData: unknown) => {
 };
 
 export const deletePet = async (petId: unknown) => {
-  await sleep(1000);
-
   // authentication check
   const session = await checkAuth();
 
@@ -202,7 +190,7 @@ export const deletePet = async (petId: unknown) => {
     };
   }
 
-  console.log({pet, validatedPetId})
+  console.log({ pet, validatedPetId });
 
   // database mutation
   try {
@@ -213,7 +201,7 @@ export const deletePet = async (petId: unknown) => {
     });
   } catch (error) {
     return {
-      message: "Could not delete pet.",
+      message: 'Could not delete pet.',
     };
   }
   revalidatePath('/app', 'layout');
