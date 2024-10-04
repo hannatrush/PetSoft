@@ -18,14 +18,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
     <form action={type === 'logIn' ? dispatchLogIn : dispatchSignUp}>
       <div className="space-y-1">
         <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          defaultValue={type === 'logIn' ? 'example@gmail.com' : ''}
-          required
-          maxLength={100}
-        />
+        <Input id="email" name="email" type="email" required maxLength={100} />
       </div>
 
       <div className="mb-4 mt-2 space-y-1">
@@ -34,7 +27,6 @@ const AuthForm = ({ type }: AuthFormProps) => {
           id="password"
           name="password"
           type="password"
-          defaultValue={type === 'logIn' ? 'example' : ''}
           required
           minLength={6}
           maxLength={100}
