@@ -10,15 +10,15 @@ export const nextAuthEdgeConfig = {
       const isLoggedIn = Boolean(auth?.user);
       const isTryingToAccessApp = request.nextUrl.pathname.includes('/app');
 
-      if (isTryingToAccessApp && !isLoggedIn) {
+      if (!isLoggedIn && isTryingToAccessApp) {
         return false;
       }
 
-      if (isTryingToAccessApp && isLoggedIn && !auth?.user.hasAccess) {
+      if (isLoggedIn && isTryingToAccessApp && !auth?.user.hasAccess) {
         return Response.redirect(new URL('/payment', request.nextUrl));
       }
 
-      if (isTryingToAccessApp && isLoggedIn && auth?.user.hasAccess) {
+      if (isLoggedIn && isTryingToAccessApp && auth?.user.hasAccess) {
         return true;
       }
 
@@ -31,7 +31,7 @@ export const nextAuthEdgeConfig = {
         return Response.redirect(new URL('/app/dashboard', request.nextUrl));
       }
 
-      if (!isTryingToAccessApp && isLoggedIn && !auth?.user.hasAccess) {
+      if (isLoggedIn && !isTryingToAccessApp && !auth?.user.hasAccess) {
         if (
           request.nextUrl.pathname.includes('/login') ||
           request.nextUrl.pathname.includes('/signup')
@@ -41,7 +41,7 @@ export const nextAuthEdgeConfig = {
         return true;
       }
 
-      if (!isTryingToAccessApp && !isLoggedIn) {
+      if (!isLoggedIn && !isTryingToAccessApp) {
         return true;
       }
 

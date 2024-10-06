@@ -190,8 +190,6 @@ export const deletePet = async (petId: unknown) => {
     };
   }
 
-  console.log({ pet, validatedPetId });
-
   // database mutation
   try {
     await prisma.pet.delete({
