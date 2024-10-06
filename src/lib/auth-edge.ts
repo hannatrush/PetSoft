@@ -7,6 +7,7 @@ export const nextAuthEdgeConfig = {
   },
   callbacks: {
     authorized: ({ auth, request }) => {
+      console.log('authorized check');
       const isLoggedIn = Boolean(auth?.user);
       const isTryingToAccessApp = request.nextUrl.pathname.includes('/app');
 
