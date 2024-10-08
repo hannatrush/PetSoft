@@ -213,7 +213,7 @@ export async function createCheckoutSession() {
     customer_email: session.user.email,
     line_items: [
       {
-        price: 'price_1P9hdQFKJAZDy6DYB4heQfMq',
+        price: 'price_1Q7YN9KpAU6QLgiYYL1jwyyz',
         quantity: 1,
       },
     ],
